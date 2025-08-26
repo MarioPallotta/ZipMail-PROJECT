@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ZipMail</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto"
-    />
-    <link rel="stylesheet" href="css/Home.css" />
-  </head>
-  <body>
-    <div id="header-container"></div>
-    <div id="nav-container"></div>
-    <div id="settings-container"></div>
-  </body>
-  <script src="js/Settings.js"></script>
-  <script>
-    async function loadComponent(id, file) {
-      const res = await fetch(file);
-      const html = await res.text();
-      document.getElementById(id).innerHTML = html;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZipMail</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+  <link rel="stylesheet" href="css/Home.css" />
+</head>
+
+<body>
+  <div id="header-container"></div>
+  <div id="nav-container"></div>
+  <div id="settings-container"></div>
+</body>
+<script src="js/Settings.js"></script>
+<script>
+  async function loadComponent(id, file) {
+    const res = await fetch(file);
+    const html = await res.text();
+    document.getElementById(id).innerHTML = html;
+  }
+
+  //Allow components to load initially
+  async function loadAllComponents() {
+    // "-container" so js add/remove function works
+    await loadComponent("header-container", "components/header.html");
+    await loadComponent("nav-container", "components/nav.html");
+    await loadComponent("settings-container", "components/settings.html");
+
+    if (typeof initSettings === "function") {
+      initSettings();
     }
+  }
 
-    //Allow components to load initially
-    async function loadAllComponents() {
-      // "-container" so js add/remove function works
-      await loadComponent("header-container", "components/header.html");
-      await loadComponent("nav-container", "components/nav.html");
-      await loadComponent("settings-container", "components/settings.html");
+  loadAllComponents();
+</script>
 
-      if (typeof initSettings === "function") {
-        initSettings();
-      }
-    }
-
-    loadAllComponents();
-  </script>
 </html>
